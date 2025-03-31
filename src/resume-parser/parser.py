@@ -11,7 +11,7 @@ def main():
     if text:
         print(text)
     else:
-        print("Не удалось получить данные из файла.")
+        print("Не удалось получить данные из файла....")
 
 if __name__ == "__main__":
     main()
