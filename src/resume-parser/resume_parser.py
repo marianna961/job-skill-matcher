@@ -3,16 +3,36 @@ import docx
 import pdfplumber
 import sqlite3
 
+
 def extract_info_from_txt(text):
     data = {
-        "specialization": None,
+        "name": None,
+        "email": None,
+        "phone": None,
+        "location": None,
         "desired_position": None,
-        "previous_positions": [],
-        "tasks_at_previous_jobs": [],
+        "specialization": None,
         "education": None,
-        "skills": [],
+        "skills": None,
+        "experience": [],
         "about_me": None
     }
+
+    name_match = re.search(r"^([^\n]+)", text)
+    if name_match:
+        data["name"] = name_match.group(1).strip()
+
+    phone_match = re.search(r"\+7\s*\(\d{3}\)\s*\d{3}-?\d{2}-?\d{2}", text)
+    if phone_match:
+        data["phone"] = phone_match.group(0).strip()
+
+    email_match = re.search(r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text)
+    if email_match:
+        data["email"] = email_match.group(0).strip()
+
+    location_match = re.search(r"Проживает:\s*([^\n]+)", text)
+    if location_match:
+        data["location"] = location_match.group(1).strip()
 
     desired_position_match = re.search(r"Желаемая должность и зарплата\s*\n([^\n]+)", text)
     if desired_position_match:
@@ -22,14 +42,6 @@ def extract_info_from_txt(text):
     if specialization_match:
         data["specialization"] = specialization_match.group(1).strip()
 
-    experience_blocks = re.findall(r"([^-\n]+)\n[^\n]+\n([^—\n]+)[^\n]*—[^\n]+\n([\s\S]+?)(?=\n\n|\Z)", text)
-    for block in experience_blocks:
-        company = block[0].strip()
-        position = block[1].strip()
-        tasks = [task.strip("- ") for task in block[2].split("\n") if task.strip()]
-        data["previous_positions"].append({"company": company, "position": position})
-        data["tasks_at_previous_jobs"].append({"company": company, "tasks": tasks})
-
     education_match = re.search(r"Образование\s*\n([\s\S]+?)\n\n", text)
     if education_match:
         data["education"] = education_match.group(1).strip()
@@ -37,14 +49,20 @@ def extract_info_from_txt(text):
     skills_match = re.search(r"Навыки\s*\n([\s\S]+?)(?=\n\n|\Z)", text)
     if skills_match:
         skills_text = skills_match.group(1).strip()
-        data["skills"] = [skill.strip() for skill in skills_text.split(";") if skill.strip()]
+        data["skills"] = "; ".join([skill.strip() for skill in skills_text.split(";") if skill.strip()])
+
+    experience_blocks = re.findall(r"([^-\n]+)\n[^\n]+\n([^—\n]+)[^\n]*—[^\n]+\n([\s\S]+?)(?=\n\n|\Z)", text)
+    for block in experience_blocks:
+        company = block[0].strip()
+        position = block[1].strip()
+        tasks = [task.strip("- ") for task in block[2].split("\n") if task.strip()]
+        data["experience"].append(f"{company} - {position}: {', '.join(tasks)}")
 
     about_me_match = re.search(r"Обо мне\s*\n([\s\S]+?)(?=\n\n|\Z)", text)
     if about_me_match:
         data["about_me"] = about_me_match.group(1).strip()
 
     return data
-
 
 def parse_doc(file_path):
     try:
@@ -129,5 +147,10 @@ def parse_resume(file_path, format_type):
         return None
 
     if text:
-        return extract_info_from_txt(text)
+        data = extract_info_from_txt(text)
+        if data:
+            user_id = save_data_to_db(data)
+            if user_id:
+                print(f"Пользователь с ID {user_id} успешно добавлен в базу данных!")
+        return data
     return None
