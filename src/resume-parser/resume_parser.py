@@ -51,13 +51,18 @@ def extract_info_from_txt(text):
         skills_text = skills_match.group(1).strip()
         data["skills"] = "; ".join([skill.strip() for skill in skills_text.split(";") if skill.strip()])
 
-    experience_blocks = re.findall(r"([^-\n]+)\n[^\n]+\n([^—\n]+)[^\n]*—[^\n]+\n([\s\S]+?)(?=\n\n|\Z)", text)
+    experience_blocks = re.findall(
+        r"([^-\n]+)\n([^\n]*)\n([^—\n]+)[^\n]*—[^\n]+\n([\s\S]+?)(?=\n\n|\Z)",
+        text
+    )
     for block in experience_blocks:
         company = block[0].strip()
-        position = block[1].strip()
-        tasks = [task.strip("- ") for task in block[2].split("\n") if task.strip()]
-        data["experience"].append(f"{company} - {position}: {', '.join(tasks)}")
-
+        city = block[1].strip()
+        position = block[2].strip()
+        tasks = [task.strip("- ") for task in block[3].split("\n") if task.strip()]
+        experience_entry = f"{company}, {city} - {position}: {', '.join(tasks)}"
+        data["experience"].append(experience_entry)
+        
     about_me_match = re.search(r"Обо мне\s*\n([\s\S]+?)(?=\n\n|\Z)", text)
     if about_me_match:
         data["about_me"] = about_me_match.group(1).strip()
