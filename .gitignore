@@ -3,3 +3,16 @@ __pycache__/
 резюме.txt
 резюме2.txt
 resumes.db
+safe/
+src/resume-parser/
+src/database/
+src/ner_parser/ner_model/
+src/ner_parser/results/
+src/ner_parser/datasets/
+src/ner_parser/datasets_labeled/
+src/ner_parser/datasets_labeled_converted/
+src/ner_parser/test_resume_dataset/
+src/ner_parser/__pycache__/
+src/competency_matrix/__pycache__/
+src/competency_matrix/
+
