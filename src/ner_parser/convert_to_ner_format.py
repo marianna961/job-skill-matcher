@@ -44,11 +44,16 @@ def convert_to_ner_format(json_files):
     return combined_ner_data
 
 
-input_files = ['test20.json', 'pl1.json', 'test.json', 'ks4.json', 'ks2.json', 'ks3.json']
+input_files = ['datasets_labeled/test20.json',
+                'datasets_labeled/pl1.json',
+                'datasets_labeled/test.json',
+                'datasets_labeled/ks4.json',
+                'datasets_labeled/ks2.json',
+                'datasets_labeled/ks3.json']
 
 combined_ner_data = convert_to_ner_format(input_files)
 
-output_file = 'upd_NER.json'
+output_file = 'datasets_labeled_converted/upd_NER.json'
 with open(output_file, 'w', encoding='utf-8') as f:
     json.dump(combined_ner_data, f, ensure_ascii=False, indent=4)
 
