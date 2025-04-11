@@ -1,9 +1,9 @@
 """
-скрипт для объедения лейбов PROFESSION и SKILLS
+скрипт для объединения лейбов PROFESSION и SKILLS
 """
 import json
 
-with open('upd_NER.json', 'r', encoding='utf-8') as f:
+with open('datasets_labeled_converted/updated_ner_data.json', 'r', encoding='utf-8') as f:
     ner_data = json.load(f)
 
 label_mapping = {
