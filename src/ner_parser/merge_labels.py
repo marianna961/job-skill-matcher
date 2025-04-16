@@ -3,7 +3,7 @@
 """
 import json
 
-with open('datasets_labeled_converted/updated_ner_data.json', 'r', encoding='utf-8') as f:
+with open('datasets_labeled_converted/upd_NER.json', 'r', encoding='utf-8') as f:
     ner_data = json.load(f)
 
 label_mapping = {
@@ -16,7 +16,7 @@ label_mapping = {
 for item in ner_data:
     item["ner_tags"] = [label_mapping.get(tag, tag) for tag in item["ner_tags"]]
 
-with open('updated_ner_data.json', 'w', encoding='utf-8') as f:
+with open('datasets_labeled_converted/upd_NER.json', 'w', encoding='utf-8') as f:
     json.dump(ner_data, f, ensure_ascii=False, indent=4)
 
 print("готово")

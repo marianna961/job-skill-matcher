@@ -4,7 +4,7 @@
 
 import json
 
-with open('updated_ner_data.json', 'r', encoding='utf-8') as f:
+with open('datasets_labeled_converted/upd_NER.json', 'r', encoding='utf-8') as f:
     ner_data = json.load(f)
 
 def filter_tokens(data):
@@ -25,7 +25,7 @@ def filter_tokens(data):
 
 filtered_data = filter_tokens(ner_data)
 
-with open('without_other.json', 'w', encoding='utf-8') as f:
+with open('datasets_labeled_converted/upd_NER.json', 'w', encoding='utf-8') as f:
     json.dump(filtered_data, f, ensure_ascii=False, indent=4)
 
 print("label_removal")

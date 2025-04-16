@@ -4,7 +4,7 @@
 """
 import os
 
-folder_path = r"C:\Users\maria\OneDrive\Documents\VSCode\job-skill-matcher\src\ner_parser\datasets\dataset401-420"
+folder_path = r"C:\Users\maria\OneDrive\Documents\VSCode\job-skill-matcher\src\ner_parser\datasets\dataset551-700"
 
 for filename in os.listdir(folder_path):
     if filename.endswith(".txt"):

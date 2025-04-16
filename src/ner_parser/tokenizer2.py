@@ -5,7 +5,7 @@ import numpy as np
 from transformers import AutoTokenizer, AutoModelForTokenClassification, TrainingArguments, Trainer
 from collections import Counter
 
-with open('without_other.json', 'r', encoding='utf-8') as f:
+with open('datasets_labeled_converted/upd_NER.json', 'r', encoding='utf-8') as f:
     ner_data = json.load(f)
 
 dataset = Dataset.from_dict({
@@ -82,7 +82,7 @@ training_args = TrainingArguments(
     weight_decay=0.01,
     save_steps=1000,
     save_total_limit=2,
-    logging_dir="./logs",
+    logging_dir="./logs", #tensorboard --logdir=./logs
     logging_steps=100
 )
 
@@ -126,6 +126,10 @@ trainer.train()
 # Оценка модели
 metrics = trainer.evaluate()
 print(metrics)
+
+with open("evaluation_results.txt", "w", encoding="utf-8") as f:
+    for key, value in metrics.items():
+        f.write(f"{key}: {value}\n")
 
 model.save_pretrained("./ner_model")
 tokenizer.save_pretrained("./ner_model")
