@@ -45,10 +45,13 @@ def convert_to_ner_format(json_files):
 
 
 input_files = ['datasets_labeled/test20.json',
+                'datasets_labeled/ks7.json',
                 'datasets_labeled/pl1.json',
                 'datasets_labeled/test.json',
                 'datasets_labeled/ks4.json',
+                'datasets_labeled/ks6.json',
                 'datasets_labeled/ks2.json',
+                'datasets_labeled/ks5.json',
                 'datasets_labeled/ks3.json']
 
 combined_ner_data = convert_to_ner_format(input_files)
