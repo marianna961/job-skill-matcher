@@ -10,9 +10,11 @@ src/ner_parser/ner_model/
 src/ner_parser/old_ner_model/
 src/ner_parser/old2_ner_model/
 src/ner_parser/old3_ner_model/
+src/ner_parser/old4_ner_model/
 src/ner_parser/results/
 src/ner_parser/old2_results/
 src/ner_parser/old3_results/
+src/ner_parser/old4_results/
 src/ner_parser/old_results/
 src/ner_parser/results/
 src/ner_parser/logs/
@@ -23,5 +25,10 @@ src/ner_parser/test_resume_dataset/
 src/ner_parser/__pycache__/
 src/competency_matrix/__pycache__/
 src/competency_matrix/
-src/app/
+src/app/templates/
+src/app/uploads/
+src/app/format_checker.py
+src/app/matrix.csv
+src/app/norm.xlsx
+src/app/table.py
 
