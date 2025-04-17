@@ -16,7 +16,6 @@ def extract_entities(text):
     for result in results:
         entity_group = result["entity_group"]
         word = result["word"]
-
         if entity_group in entities:
             entities[entity_group] += " " + word
         else:
