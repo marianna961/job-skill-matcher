@@ -27,7 +27,7 @@ JOB-SKILL-MARCHER/
 │   └── matrix.csv          # Матрица компетенций
 │   └── ner_pipeline.py     # Пайплайн для извлечения данных из резюме
 ├── ner_parser/
-│   └── ner_model/           # NER-модель для извлечения навыков
+│   └── ner_model/          # NER-модель для извлечения навыков
 ├── requirements.txt        # Зависимости Python
 └── README.md               # Документация проекта
 ```
@@ -61,6 +61,7 @@ JOB-SKILL-MARCHER/
 5. **Запустите приложение:**
 
    ```bash
+   cd app
    python main.py
    ```
 6. **Откройте браузер:**
