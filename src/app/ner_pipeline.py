@@ -10,7 +10,7 @@ ner_pipeline = pipeline("ner", model=model, tokenizer=tokenizer, aggregation_str
 
 def extract_entities(text):
     results = ner_pipeline(text)
-    results = [result for result in results if result["score"] > 0.05]
+    results = [result for result in results if result["score"] > 0.01]
 
     entities = {}
     for result in results:
