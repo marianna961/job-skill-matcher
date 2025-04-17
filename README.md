@@ -1,6 +1,6 @@
 # Job-Skill-Matcher
 
-![Описание изображения](result.jpg)
+![](result.jpg)
 
 ## Описание проекта
 
@@ -121,3 +121,4 @@ SQL,2,3,2,1
 | Черткова Марианна (Lead) | marianna961    |
 | Симонова Ксения            | kseniasimonova |
 | Шалимова Полина            | polina-cmd     |
+
