@@ -3,24 +3,37 @@ __pycache__/
 резюме.txt
 резюме2.txt
 resumes.db
+<<<<<<< HEAD
 *.safetensors
 *.pt
+=======
+>>>>>>> 9af0a85d955d718ab7b9dd8bc9f33b5715163ea3
 safe/
 src/resume-parser/
 src/database/
 src/ner_parser/ner_model/
+<<<<<<< HEAD
 src/ner_parser/usl/
+=======
+>>>>>>> 9af0a85d955d718ab7b9dd8bc9f33b5715163ea3
 src/ner_parser/old_ner_model/
 src/ner_parser/old2_ner_model/
 src/ner_parser/old3_ner_model/
 src/ner_parser/old4_ner_model/
 src/ner_parser/old5_ner_model/
+<<<<<<< HEAD
+=======
+src/ner_parser/results/
+>>>>>>> 9af0a85d955d718ab7b9dd8bc9f33b5715163ea3
 src/ner_parser/old2_results/
 src/ner_parser/old3_results/
 src/ner_parser/old4_results/
 src/ner_parser/old_results/
 src/ner_parser/results/
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9af0a85d955d718ab7b9dd8bc9f33b5715163ea3
 src/ner_parser/logs/
 src/ner_parser/datasets/
 src/ner_parser/datasets_labeled/
