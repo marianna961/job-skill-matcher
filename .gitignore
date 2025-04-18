@@ -33,7 +33,6 @@ src/ner_parser/test_resume_dataset/
 src/ner_parser/__pycache__/
 src/competency_matrix/__pycache__/
 src/competency_matrix/
-src/app/templates/
 src/app/uploads/
 src/app/format_checker.py
 src/app/norm.xlsx
