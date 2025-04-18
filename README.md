@@ -1,6 +1,6 @@
 # Job-Skill-Matcher
 
-![img](image/result.jpg)
+![img](image/README/result.jpg)
 
 ## Описание проекта
 
