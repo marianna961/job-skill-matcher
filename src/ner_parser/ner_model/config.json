@@ -1,4 +1,5 @@
 {
+  "_name_or_path": "bert-base-multilingual-cased",
   "architectures": [
     "BertForTokenClassification"
   ],
@@ -45,7 +46,7 @@
   "pooler_type": "first_token_transform",
   "position_embedding_type": "absolute",
   "torch_dtype": "float32",
-  "transformers_version": "4.50.3",
+  "transformers_version": "4.41.0",
   "type_vocab_size": 2,
   "use_cache": true,
   "vocab_size": 119547

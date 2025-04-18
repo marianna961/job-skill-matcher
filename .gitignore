@@ -21,6 +21,7 @@ src/ner_parser/old2_results/
 src/ner_parser/old3_results/
 src/ner_parser/old4_results/
 src/ner_parser/old_results/
+src/ner_parser/ner_model_bets/
 src/ner_parser/results/
 src/ner_parser/results/checkpoint-81/
 src/ner_parser/results1/
