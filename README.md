@@ -56,7 +56,11 @@ JOB-SKILL-MATCHER/
    ```
 4. **Подготовьте данные:**
 
-   - Скачайте модель по ссылке [kaggle](https://www.kaggle.com/models/mariannach/ner_job_skill_matcher/) и расспакуйте в папке ner_parser.
+   - Скачайте модель по ссылке [kaggle](https://www.kaggle.com/models/mariannach/ner_job_skill_matcher/) и расспакуйте по пути:
+     ```bash
+     ├── ner_parser/
+     │   └── ner_model/ 
+     ```
    - Убедитесь, что файл `matrix.csv` находится в папке app.
    - Файл должен содержать список навыков и требуемых уровней для каждой профессии.
 5. **Запустите приложение:**

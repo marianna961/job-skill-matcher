@@ -12,7 +12,6 @@ src/ner_parser/ner_model_the_best/
 src/ner_parser/usl/
 src/ner_parser/usl2/
 src/ner_parser/ner_model1/
-src/ner_parser/ner_model/
 src/ner_parser/old_ner_model/
 src/ner_parser/old2_ner_model/
 src/ner_parser/old3_ner_model/
