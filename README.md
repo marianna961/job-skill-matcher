@@ -32,7 +32,8 @@ JOB-SKILL-MATCHER/
 	├── avito_parser/
 	│   └── parser.py           # Парсер резюме для авито
 ├── requirements.txt        	    # Зависимости Python
-└── README.md              	    # Документация проекта
+└── README.md   
+└── documentation.md                # Документация проекта
 ```
 
 ---
