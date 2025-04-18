@@ -60,7 +60,7 @@ JOB-SKILL-MATCHER/
    ```
 4. **Подготовьте данные:**
 
-   - Скачайте модель по ссылке [kaggle](https://www.kaggle.com/models/mariannach/ner_job_skill_matcher/) и расспакуйте по пути:
+   - Скачайте модель по ссылке [kaggle](https://www.kaggle.com/models/mariannach/ner_job_skill_matcher/) и распакуйте по пути:
      ```bash
      ├── ner_parser/
      │   └── ner_model/ 
