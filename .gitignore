@@ -36,7 +36,6 @@ src/competency_matrix/
 src/app/templates/
 src/app/uploads/
 src/app/format_checker.py
-src/app/matrix.csv
 src/app/norm.xlsx
 src/app/table.py
 
