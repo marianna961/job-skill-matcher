@@ -11,6 +11,7 @@ src/ner_parser/old_ner_model/
 src/ner_parser/old2_ner_model/
 src/ner_parser/old3_ner_model/
 src/ner_parser/old4_ner_model/
+src/ner_parser/old5_ner_model/
 src/ner_parser/results/
 src/ner_parser/old2_results/
 src/ner_parser/old3_results/

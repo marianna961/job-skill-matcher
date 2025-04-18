@@ -1,9 +1,9 @@
-eval_loss: 0.07455887645483017
-eval_precision: 0.9618100128369704
-eval_recall: 0.9639755548407848
-eval_f1: 0.9628915662650601
-eval_accuracy: 0.9829942301852415
-eval_runtime: 16.6587
-eval_samples_per_second: 6.483
-eval_steps_per_second: 0.42
+eval_loss: 0.07409477978944778
+eval_precision: 0.9522445081184336
+eval_recall: 0.9540669856459331
+eval_f1: 0.9531548757170172
+eval_accuracy: 0.9792994824870622
+eval_runtime: 21.1061
+eval_samples_per_second: 5.117
+eval_steps_per_second: 0.332
 epoch: 3.0
