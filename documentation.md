@@ -168,7 +168,7 @@ def compare_with_matrix(profession_skills, selected_job):
     return results, similarity * 100
 ```
 
-Файл `matrix.csv` содержит матрицу компетенций. Структура файла:
+Файл `matrix.csv` содержит матрицу компетенций. При необходимости можно легко изменить содежание файла. Структура файла:
 
 ```csv
 Skill,DATA_SCIENTIST,DATA_ENGINEER,TECHNICAL_ANALYST_IN_AI,MANAGER_IN_AI
