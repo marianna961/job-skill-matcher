@@ -20,16 +20,19 @@ Job-Skill-Matcher — это веб-приложение, которое ана�
 
 ```
 JOB-SKILL-MATCHER/
-├── app/
-│   └── main.py             # Основной файл Flask-приложения
-│   └── templates/
-│   	└── index.html      # HTML-шаблон для отображения результатов
-│   └── matrix.csv          # Матрица компетенций
-│   └── ner_pipeline.py     # Пайплайн для извлечения данных из резюме
-├── ner_parser/
-│   └── ner_model/          # NER-модель для извлечения навыков
-├── requirements.txt        # Зависимости Python
-└── README.md               # Документация проекта
+├──src/
+	├── app/
+	│   └── main.py             # Основной файл Flask-приложения
+	│   └── templates/
+	│   	└── index.html      # HTML-шаблон для отображения результатов
+	│   └── matrix.csv          # Матрица компетенций
+	│   └── ner_pipeline.py     # Пайплайн для извлечения данных из резюме
+	├── ner_parser/
+	│   └── ner_model/          # NER-модель для извлечения навыков
+	├── avito_parser/
+	│   └── parser.py           # Парсер резюме для авито
+├── requirements.txt        	    # Зависимости Python
+└── README.md              	    # Документация проекта
 ```
 
 ---
