@@ -1,167 +1,592 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<div class="container">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NER Резюме</title>
+    <title>job-skill-matcher - сервис анализа компетенций </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: #ffffff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-       
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #f1f5f9;
+            --accent-color: #10b981;
+            --warning-color: #f59e0b;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --background: #ffffff;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 20px;
-            background-color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #406FB4 0%, #9CBBFB 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
         }
-        h2 {
-            color: #333;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-        label {
-            font-size: 1.1em;
-            margin-bottom: 5px;
-            display: block;
-        }
-        input[type="file"], select, button {
-            padding: 10px;
-            margin-top: 10px;
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #C6C6C6;
-            font-size: 1em;
-        }
-        button {
-            background-color: rgb(0, 60, 188);
-            color: rgb(255, 255, 255);
-            border: none;
-            cursor: pointer;
-            max-width: 800px;
 
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
         }
-        button:hover {
-            background-color: #3C3A52;
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
         }
-        table {
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .upload-section {
+            background: var(--background);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .upload-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            background: var(--secondary-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-upload-display:hover {
+            border-color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .file-upload-display.has-file {
+            border-color: var(--accent-color);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .file-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .file-text {
+            text-align: center;
+        }
+
+        .file-text h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-text p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background: var(--background);
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--background);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        table, th, td {
-            border: 1px solid #C6C6C6;
-        }
-        th, td {
-            padding: 12px;
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
             text-align: left;
+            border-bottom: 1px solid var(--border-color);
         }
-        th {
-            background-color: #C6C6C6;
+
+        .data-table th {
+            background: var(--secondary-color);
+            font-weight: 600;
+            color: var(--text-primary);
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+
+        .data-table tr:hover {
+            background: rgba(59, 130, 246, 0.02);
         }
-        li {
-            padding: 8px 0;
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .level-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .level-1 { background: #fecaca; color: #dc2626; }
+        .level-2 { background: #fed7aa; color: #ea580c; }
+        .level-3 { background: #bbf7d0; color: #059669; }
+
+        .match-percentage {
+            font-weight: 600;
+        }
+
+        .match-high { color: var(--accent-color); }
+        .match-medium { color: var(--warning-color); }
+        .match-low { color: var(--danger-color); }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .university-score {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .score-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .upload-section {
+                padding: 1.5rem;
+            }
+            
+            .summary-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1> job-skill-matcher </h1>
+            <p> MVP Сервиса анализа компетенций </p>
+        </div>
 
-    <h1>Загрузите резюме для анализа</h1>
+        <div class="upload-section">
+            <form method="POST" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+                <div class="form-group">
+                    <label class="form-label" for="resume">
+                        <i class="fas fa-file-upload"></i> Загрузите резюме для анализа
+                    </label>
 
-    <form method="POST" enctype="multipart/form-data">
-        <label for="resume">Выберите резюме:</label>
-        <input type="file" name="resume" id="resume" required>
-      
-        <label for="job_role">Выберите вакансию:</label>
-        <select name="job_role" id="job_role" required>
-          <option value="DATA_SCIENTIST">Аналитик данных (Data Scientist, ML Engineer)</option>
-          <option value="DATA_ENGINEER">Инженер данных (Data Engineer)</option>
-          <option value="TECHNICAL_ANALYST_IN_AI">Технический аналитик в ИИ</option>
-          <option value="MANAGER_IN_AI">Менеджер в ИИ</option>
-        </select>
-      
-        <button type="submit">Загрузить</button>
-    </form>
+                    <div class="illustration-container">
+                        <img src="static/images/first.png" />
+                    </div>
 
-    {% if cleaned %}
-        <h2>Распознанные данные</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Категория</th>
-                    <th>Значение</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for key, value in cleaned.items() %}
-                    <tr>
-                        <td><strong>{{ key }}</strong></td>
-                        <td>{{ value }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-    {% if matrix %}
-    <h2>Результаты сравнения</h2>
-    <p><strong>Профессия:</strong> {{ selected_job }}</p>
+                    <div class="file-upload-wrapper">
+                        <input type="file" name="resume" id="resume" class="file-upload" required accept=".txt,.pdf,.doc,.docx">
+                        <div class="file-upload-display" id="fileDisplay">
+                            <i class="fas fa-cloud-upload-alt file-icon"></i>
+                            <div class="file-text">
+                                <h3>Выберите файл резюме</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <h3>Навыки кандидата:</h3>
-    <ul>
-        {% for skill in matrix.candidate_skills %}
-            <li>{{ skill }}</li>
-        {% endfor %}
-    </ul>
+                <div class="form-group">
+                    <label class="form-label" for="job_role">
+                        <i class="fas fa-briefcase"></i> Выберите целевую вакансию
+                    </label>
+                    <div class="select-wrapper">
+                        <select name="job_role" id="job_role" class="form-select" required>
+                            <option value="">-- Выберите вакансию --</option>
+                            <option value="DATA_SCIENTIST">Аналитик данных (Data Scientist, ML Engineer)</option>
+                            <option value="DATA_ENGINEER">Инженер данных (Data Engineer)</option>
+                            <option value="TECHNICAL_ANALYST_IN_AI">Технический аналитик в ИИ</option>
+                            <option value="MANAGER_IN_AI">Менеджер в ИИ</option>
+                        </select>
+                    </div>
+                </div>
 
-    <h3>Сравнение с компетенциями:</h3>
-    <table>
-        <tr>
-          <th>Навык</th>
-          <th>Найденный в резюме</th>
-          <th>Требуемый уровень</th>
-          <th>Уровень кандидата</th>
-          <th>Совпадение (%)</th>
-        </tr>
-        {% for row in matrix.comparison_result %}
-        <tr>
-          <td>{{ row.skill }}</td>
-          <td>{{ row.matched_resume_skill }}</td>
-          <td>{{ row.required_level }}</td>
-          <td>{{ row.candidate_level }}</td>
-          <td>{{ row.match_percentage }}</td>
-        </tr>
-        {% endfor %}
-      </table>
-      
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Проанализировать резюме
+                </button>
+            </form>
+        </div>
 
-    <h3>Результаты:</h3>
-    <ul>
-        <li><strong>Университет:</strong> {{ matrix.university }} (Оценка: {{ matrix.university_score }})</li>
-        <li><strong>Опыт работы:</strong> {{ work_exp }}</li>
-        <li><strong>Косинусное сходство с идеалом:</strong> {{ matrix.similarity_score }}</li>
-    </ul>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Анализируем резюме, пожалуйста подождите...</p>
+        </div>
 
-    {% if skill_matrix_html %}
-        <h3>Оценка по каждому навыку</h3>
-        {{ skill_matrix_html|safe }}
-    {% endif %}
-{% else %}
-    <p>Матрица компетенций не доступна для отображения.</p>
-{% endif %}
+        {% if cleaned %}
+        <div class="results-section fade-in">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-user-circle card-icon"></i>
+                    <h2>Распознанные данные</h2>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Категория</th>
+                            <th>Значение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, value in cleaned.items() %}
+                        <tr>
+                            <td><strong>{{ key }}</strong></td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-</div>
+            {% if matrix %}
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line card-icon"></i>
+                    <h2>Результаты анализа компетенций</h2>
+                </div>
+                <p><strong>Профессия:</strong> {{ selected_job }}</p>
+                
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Университет</div>
+                        <div class="stat-value">
+                            <span class="university-score">
+                                {{ matrix.university }}
+                                <span class="score-badge">Уровень {{ matrix.university_score }}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Косинусное сходство с идеалом </div>
+                        <div class="stat-value">{{ matrix.similarity_score }}%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Опыт работы</div>
+                        <div class="stat-value">{{ work_exp }}</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Найденные навыки кандидата:</h3>
+                <div class="skills-grid">
+                    {% for skill in matrix.candidate_skills %}
+                    <div class="skill-tag">{{ skill }}</div>
+                    {% endfor %}
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Сравнение с требованиями вакансии:</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Навык</th>
+                            <th>Найден в резюме</th>
+                            <th>Требуемый уровень</th>
+                            <th>Уровень кандидата</th>
+                            <th>Совпадение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in matrix.comparison_result %}
+                        <tr>
+                            <td>{{ row.skill }}</td>
+                            <td>{{ row.matched_resume_skill if row.matched_resume_skill else '-' }}</td>
+                            <td><span class="level-badge level-{{ row.required_level }}">{{ row.required_level }}</span></td>
+                            <td><span class="level-badge level-{{ row.candidate_level if row.candidate_level > 0 else 1 }}">{{ row.candidate_level }}</span></td>
+                            <td>
+                                <span class="match-percentage 
+                                    {% if row.match_percentage >= 80 %}match-high
+                                    {% elif row.match_percentage >= 50 %}match-medium
+                                    {% else %}match-low{% endif %}">
+                                    {{ row.match_percentage }}%
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('resume');
+        const fileDisplay = document.getElementById('fileDisplay');
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileDisplay.classList.add('has-file');
+                fileDisplay.innerHTML = `
+                    <i class="fas fa-file-check file-icon" style="color: var(--accent-color);"></i>
+                    <div class="file-text">
+                        <h3>${file.name}</h3>
+                        <p>Размер: ${(file.size / 1024 / 1024).toFixed(2)} МБ</p>
+                    </div>
+                `;
+            }
+        });
+
+        uploadForm.addEventListener('submit', function(e) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Анализируем...';
+            loading.style.display = 'block';
+            
+        });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>

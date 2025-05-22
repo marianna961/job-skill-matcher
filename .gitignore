@@ -8,6 +8,7 @@ resumes.db
 safe/
 src/resume-parser/
 src/database/
+src/ner_parser/
 src/ner_parser/ner_model_the_best/
 src/ner_parser/usl/
 src/ner_parser/usl2/
